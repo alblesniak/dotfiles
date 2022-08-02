@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # ALIASES
 alias l='ls -lAFh'
 
@@ -11,3 +13,6 @@ PROMPT='
 %1~ %L %# '
 
 RPROMPT='%*'
+
+# Initialize Starship
+eval "$(starship init zsh)"

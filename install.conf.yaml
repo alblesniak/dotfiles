@@ -4,14 +4,16 @@
 
 - clean: ['~']
 
-# - link:
-#     ~/.tmux.conf: tmux.conf
-#     ~/.vim: vim
-#     ~/.vimrc: vimrc
-# 
-# - create:
-#     - ~/downloads
-#     - ~/.vim/undo-history
+- create:
+    - ~/.config/alacritty
+
+- link:
+    ~/.gitconfig: gitconfig
+    ~/.zshrc: config/zsh/zshrc
+    ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
+    ~/.config/starship.toml: config/starship/starship.toml
+
+
 # 
 # - shell:
 #   - [git submodule update --init --recursive, Installing submodules]
