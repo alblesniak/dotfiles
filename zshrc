@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 # Aliases
 alias l='exa -lah --git'
 alias tree='exa --tree --level=2'
