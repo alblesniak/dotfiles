@@ -1,21 +1,19 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
-# ALIASES
-alias l='ls -lAFh'
+# Aliases
+alias l='exa -lah --git'
+alias tree='exa --tree --level=2'
+alias bbd='brew bundle dump --force --describe'
+alias man='batman'
+alias grep='batgrep'
 
-# FUNCTIONS
+# Custom functions
 function mkcd() {
     mkdir -p "$@" && cd "$_";
 }
 
-# Syntax highlighting for manual pages
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-# PROMPT
-PROMPT='
-%1~ %L %# '
-
-RPROMPT='%*'
+# Disable pop-ups in brew installations
+export HOMEBREW_CASK_OPTS='--no-quarantine'
 
 # Initialize Starship
 eval "$(starship init zsh)"
