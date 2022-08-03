@@ -12,3 +12,9 @@
       glob: true
       create: true
       path: config/*
+
+- shell:
+  -
+    command: ./setup_homebrew.zsh
+    stdout: true
+    stderr: true

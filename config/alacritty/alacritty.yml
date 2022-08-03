@@ -9,6 +9,7 @@ selection:
     save_to_clipboard: true
 
 window:
+  startup_mode: SimpleFullscreen 
   opacity: 1.0
   padding:
     x: 5
