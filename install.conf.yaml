@@ -4,16 +4,11 @@
 
 - clean: ['~']
 
-- create:
-    - ~/.config/alacritty
 
 - link:
-    ~/.gitconfig: gitconfig
-    ~/.zshrc: config/zsh/zshrc
-    ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
-    ~/.config/starship.toml: config/starship/starship.toml
-
-
-# 
-# - shell:
-#   - [git submodule update --init --recursive, Installing submodules]
+    ~/.gitconfig:
+    ~/.zshrc:
+    ~/.config:
+      glob: true
+      create: true
+      path: config/*
