@@ -16,6 +16,32 @@
 
 - shell:
   -
+    command: softwareupdate --all --install --force
+    stdin: true
+    stdout: true
+    stderr: true
+  -
+    command: xcode-select --install
+    stdin: true
+    stdout: true
+    stderr: true
+  -
+    command: chmod +x ./setup_homebrew.zsh
+    stdin: true
+    stdout: true
+    stderr: true
+  -
     command: ./setup_homebrew.zsh
+    stdin: true
+    stdout: true
+    stderr: true
+  - 
+    command: git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    stdin: true
+    stdout: true
+    stderr: ture
+  - 
+    command: nvim +PackerInstall +qall
+    stdin: true
     stdout: true
     stderr: true
