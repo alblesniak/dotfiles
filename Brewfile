@@ -15,6 +15,8 @@ brew "httpie"
 brew "lf"
 # Mac App Store command-line interface
 brew "mas"
+# Node version management
+brew "n"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Terminal-based client for Spotify
