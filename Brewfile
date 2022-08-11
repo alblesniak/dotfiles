@@ -23,6 +23,8 @@ brew "neovim"
 brew "spotify-tui"
 # Cross-shell prompt for astronauts
 brew "starship"
+# UNIX shell (command interpreter)
+brew "zsh"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
 # Simple hotkey-daemon for macOS.

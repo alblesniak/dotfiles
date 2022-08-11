@@ -8,12 +8,16 @@ $git_status\
 $git_metrics\
 $fill\
 $nodejs\
+$python\
 $cmd_duration $jobs $time\
 $line_break\
 $character"""
 
 [nodejs]
-format = "[$symbol($version )]($style)"
+format = "[${symbol}(${version} )]($style)"
+
+[python]
+format = "[${symbol}${pyenv_prefix}(${version} )(($virtualenv) )]($style)"
 
 [fill]
 symbol = " "

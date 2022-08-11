@@ -1,7 +1,6 @@
 # Aliases
 alias l="exa -lah --git"
-alias vim="nvim"
-alias v="nvim"
+alias n="nvim"
 alias tree="exa --tree --level=2"
 alias bbd="brew bundle dump --force --describe"
 alias man="batman"
