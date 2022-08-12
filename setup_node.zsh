@@ -13,4 +13,9 @@ else
 fi
 
 
+# Install Global NPM Packages
+npm install --global @angular/cli
+
+echo "Global NPM Packages installed:"
+npm list -global --depth=0
 
