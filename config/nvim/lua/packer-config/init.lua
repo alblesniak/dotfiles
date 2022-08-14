@@ -14,5 +14,33 @@ return require('packer').startup(function()
 
     -- Configurations for Nvim LSP
     use 'neovim/nvim-lspconfig'
+    
+    -- Autocompletion plugin
+    use 'hrsh7th/nvim-cmp'
+
+    -- LSP source for nvim-cmp
+    use 'hrsh7th/cmp-nvim-lsp'
+
+    -- Snippets source for nvim-cmp
+    use 'saadparwaiz1/cmp_luasnip'
+    use 'L3MON4D3/LuaSnip'
+
+    -- Vscode-like pictograms in autocompletion
+    use 'onsails/lspkind-nvim'
+    
+    -- A fancy, configurable, notification manager for NeoVim
+    use 'rcarriga/nvim-notify'
+
+    -- Neovim statusline
+    use 'nvim-lualine/lualine.nvim'
+
+    -- Tabline plugin
+    use 'romgrk/barbar.nvim'
+
+    -- Tree-sitter syntax highlighting
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+
+    -- Tree-sitter plugin for highlight definition and current scope
+    use 'nvim-treesitter/nvim-treesitter-refactor'
 
 end)

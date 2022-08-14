@@ -19,6 +19,10 @@ brew "mas"
 brew "n"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Python version management
+brew "pyenv"
+# Pyenv plugin to manage virtualenv
+brew "pyenv-virtualenv"
 # Terminal-based client for Spotify
 brew "spotify-tui"
 # Cross-shell prompt for astronauts
