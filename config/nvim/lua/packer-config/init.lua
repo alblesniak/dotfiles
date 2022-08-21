@@ -43,4 +43,13 @@ return require('packer').startup(function()
     -- Tree-sitter plugin for highlight definition and current scope
     use 'nvim-treesitter/nvim-treesitter-refactor'
 
+    -- Telescope fuzzy finder
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
+
+    -- Mason.nvim plugin to manage LSP, DAP, linters, formatters, etc.
+    use 'williamboman/mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
 end)
