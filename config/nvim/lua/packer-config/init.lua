@@ -52,4 +52,13 @@ return require('packer').startup(function()
     -- Mason.nvim plugin to manage LSP, DAP, linters, formatters, etc.
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
+
+    -- plugin that renders diagnostics using virtual lines on top of the real line of code
+    use({
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+            require("lsp_lines").setup()
+        end,
+    })
+
 end)
