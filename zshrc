@@ -1,12 +1,16 @@
 # Aliases
 alias l="exa -lah --git"
-alias n="nvim"
+alias v="nvim"
 alias rm="trash -rf"
 alias tree="exa --tree --level=2"
 alias bbd="brew bundle dump --force --describe"
 alias man="batman"
 alias grep="batgrep"
 alias trail="<<<${(F)path}"
+alias cat="bat"
+
+# Custom options
+setopt auto_cd
 
 # Custom functions
 function mkcd() {
@@ -28,11 +32,10 @@ path=(
     $path
 )
 
-# Add locations to the PATH
-export PATH="$PATH:$N_PREFIX/bin"
-
 # Initializations
 eval "$(starship init zsh)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# ZSH-autosuggestions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh

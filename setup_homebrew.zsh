@@ -15,9 +15,10 @@ fi
 brew bundle --verbose
 
 # Update and Upgrade
-echo "Updating and upgrading Homebrew..."
-yes | brew update
-yes | brew upgrade
+# echo "Updating and upgrading Homebrew..."
+# yes | brew update
+# yes | brew upgrade
 
 # Remove outdated versions from the cellar
+echo "Cellar cleaning..."
 brew cleanup
