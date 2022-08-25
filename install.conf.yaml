@@ -22,6 +22,7 @@
     stderr: true
 
   - command: ./setup_homebrew.zsh
+    stdin: true
     stdout: true
     stderr: true
 
