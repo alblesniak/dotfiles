@@ -7,6 +7,8 @@ tap "homebrew/services"
 tap "koekeishiya/formulae"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Tool for managing dock items
+brew "dockutil"
 # Modern replacement for 'ls'
 brew "exa"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -29,6 +31,8 @@ brew "spotify-tui"
 brew "starship"
 # UNIX shell (command interpreter)
 brew "zsh"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
 # Simple hotkey-daemon for macOS.
