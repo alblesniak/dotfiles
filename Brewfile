@@ -7,6 +7,8 @@ tap "homebrew/services"
 tap "koekeishiya/formulae"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Cross-platform make
+brew "cmake"
 # Tool for managing dock items
 brew "dockutil"
 # Modern replacement for 'ls'
@@ -15,6 +17,8 @@ brew "exa"
 brew "httpie"
 # Terminal file manager
 brew "lf"
+# Utility for directing compilation
+brew "make"
 # Mac App Store command-line interface
 brew "mas"
 # Node version management
@@ -50,8 +54,6 @@ cask "dropbox"
 cask "font-hack-nerd-font"
 # Client for the Google Drive storage service
 cask "google-drive"
-# Free and open-source media player
-cask "iina"
 # Music streaming service
 cask "spotify"
 # Desktop client for WhatsApp
