@@ -1,6 +1,6 @@
 # Aliases
 alias l="exa -lah --git"
-alias v="nvim"
+alias nv="nvim"
 alias rm="trash -rf"
 alias tree="exa --tree --level=2"
 alias bbd="brew bundle dump --force --describe"
