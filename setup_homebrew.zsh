@@ -8,14 +8,13 @@ if exists brew; then
 else
     echo 'Installing homebrew...'
     yes | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 fi
 
 # Install from Brewfile
 brew bundle --verbose
 
 # Update and Upgrade
-echo "Updating and upgrading Homebrew..."
+# echo "Updating and upgrading Homebrew..."
 # yes | brew update
 # yes | brew upgrade
 
