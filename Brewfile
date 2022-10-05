@@ -15,6 +15,8 @@ brew "dockutil"
 brew "exa"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Terminal file manager
 brew "lf"
 # Utility for directing compilation
@@ -33,6 +35,10 @@ brew "pyenv-virtualenv"
 brew "spotify-tui"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Terminal multiplexer
+brew "tmux"
+# Internet file retriever
+brew "wget"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Fish-like fast/unobtrusive autosuggestions for zsh
@@ -51,12 +57,16 @@ cask "brave-browser"
 cask "discord"
 # Client for the Dropbox cloud storage service
 cask "dropbox"
+# Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
 # Client for the Google Drive storage service
 cask "google-drive"
+# Keyboard customizer
+cask "karabiner-elements"
 # Music streaming service
 cask "spotify"
 # Desktop client for WhatsApp
 cask "whatsapp"
 # Collect, organize, cite, and share research sources
 cask "zotero"
+mas "The Unarchiver", id: 425424353
