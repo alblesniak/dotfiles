@@ -35,6 +35,8 @@ brew "pyenv-virtualenv"
 brew "spotify-tui"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Opinionated Lua code formatter
+brew "stylua"
 # Terminal multiplexer
 brew "tmux"
 # Internet file retriever
