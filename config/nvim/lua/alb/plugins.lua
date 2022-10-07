@@ -26,7 +26,7 @@ vim.cmd [[
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
-  vim.notify("Packer not found!")  
+  vim.notify("Packer not found!")
   return
 end
 
@@ -42,7 +42,7 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
 
--- My plugins here
+  -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
@@ -61,7 +61,11 @@ return packer.startup(function(use)
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
+
+  -- Nvim notify
   use "rcarriga/nvim-notify"
+
+  -- Lualine
   use "nvim-lualine/lualine.nvim"
 
   -- Telescope
@@ -74,6 +78,7 @@ return packer.startup(function(use)
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
   -- Treesitter
   use {
