@@ -10,7 +10,7 @@ selection:
 
 window:
   startup_mode: SimpleFullscreen 
-  opacity: 1.0
+  opacity: 0.975
   padding:
     x: 20
     y: 0
