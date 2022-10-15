@@ -22,13 +22,13 @@ defaults write com.apple.Dock "autohide-time-modifier" -float 0
 # Sety to not show recently used apps
 defaults write com.apple.dock "show-recents" -bool "false"
 
-dockutil --no-restart --remove all
-dockutil --no-restart --add "/Applications/Brave Browser.app"
-dockutil --no-restart --add "/Applications/Kalendarz.app"
-dockutil --no-restart --add "/Applications/Alacritty.app"
-dockutil --no-restart --add "/Applications/Discord.app"
-dockutil --no-restart --add "/Applications/WhatsApp.app"
-dockutil --no-restart --add "/Applications/Zotero.app"
+# dockutil --no-restart --remove all
+# dockutil --no-restart --add "/Applications/Brave Browser.app"
+# dockutil --no-restart --add "/Applications/Kalendarz.app"
+# dockutil --no-restart --add "/Applications/Alacritty.app"
+# dockutil --no-restart --add "/Applications/Discord.app"
+# dockutil --no-restart --add "/Applications/WhatsApp.app"
+# dockutil --no-restart --add "/Applications/Zotero.app"
 
 killall Dock
 echo "Dock is set."

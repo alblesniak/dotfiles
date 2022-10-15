@@ -29,6 +29,8 @@ typeset -U path
 path=(
     "$PYENV_ROOT/bin"
     "$N_PREFIX/bin"
+    "/opt/homebrew/bin"
+    "/Users/alb/.local/bin/"
     $path
 )
 
