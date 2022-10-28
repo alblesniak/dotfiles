@@ -63,8 +63,6 @@ cask "dropbox"
 cask "font-hack-nerd-font"
 # Client for the Google Drive storage service
 cask "google-drive"
-# Keyboard customizer
-cask "karabiner-elements"
 # Music streaming service
 cask "spotify"
 # Desktop client for WhatsApp
