@@ -13,6 +13,10 @@
       glob: true
       create: true
       path: config/*
+    ~/.warp:
+      glob: true
+      create: true
+      path: warp/*
 
 - shell:
 
