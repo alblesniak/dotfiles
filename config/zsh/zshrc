@@ -1,0 +1,23 @@
+# Set Variables
+
+# Change ZSH Options
+
+# Create Aliases
+alias l='ls -lAFh'
+
+
+# Add Locations to $PATH Variable
+
+# Write Handy Functions
+function mkcd() {
+  mkdir -p "$@" && cd "$_";
+}
+
+# Use ZSH Plugins
+
+# ...and Other Surprises
+
+
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"

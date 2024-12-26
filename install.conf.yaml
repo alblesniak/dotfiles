@@ -1,0 +1,33 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.tmux.conf: config/tmux/tmux.conf
+    ~/.zshrc: config/zsh/zshrc
+    ~/.gitconfig: config/git/gitconfig
+
+- shell:
+
+    - description: Aktualizacja macOS
+      command: softwareupdate --all --install --force
+      stdin: true
+      stdout: true
+      stderr: true
+
+    - description: Instalacja Homebrew
+      command: scripts/setup_homebrew.zsh
+      stdout: true
+      stderr: true
+
+    - description: Generowanie klucza SSH i dodanie go do GitHub
+      command: scripts/setup_github.zsh
+      stdout: true
+      stderr: true
+
+    - description: Instalacja repozytoriów
+      command: scripts/setup_repos.zsh
+      stdout: true
+      stderr: true
