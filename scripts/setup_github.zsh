@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+echo "Rozpoczynam konfigurację GitHub CLI i klucza SSH..."
+
 # Ładowanie Homebrew do PATH, jeśli nie jest dostępne
 if ! command -v brew &> /dev/null; then
   echo "Ładowanie Homebrew do PATH..."
@@ -19,7 +21,6 @@ if ! command -v gh &> /dev/null; then
 fi
 
 # Sprawdzenie statusu logowania
-echo "Sprawdzam status logowania do GitHub CLI..."
 if ! gh auth status &> /dev/null; then
   echo "Nie jesteś zalogowany. Rozpoczynam logowanie do GitHub..."
   gh auth login || {
@@ -30,14 +31,12 @@ else
   echo "GitHub CLI jest już zalogowany."
 fi
 
-# Odświeżenie tokena z zakresem admin:public_key
-if gh auth status 2>&1 | grep -q "This API operation needs the \"admin:public_key\" scope"; then
-  echo "Dodawanie brakującego zakresu admin:public_key do tokena autoryzacyjnego..."
-  gh auth refresh -h github.com -s admin:public_key || {
-    echo "Błąd podczas dodawania zakresu admin:public_key."
-    exit 1
-  }
-fi
+# Wymuś odświeżenie tokena z zakresem admin:public_key
+echo "Odświeżam token autoryzacyjny z wymaganym zakresem admin:public_key..."
+gh auth refresh -h github.com -s admin:public_key || {
+  echo "Błąd: Nie udało się odświeżyć tokena z zakresem admin:public_key."
+  exit 1
+}
 
 # Generowanie klucza SSH
 if [ ! -f ~/.ssh/id_ed25519 ]; then
@@ -51,10 +50,29 @@ else
   echo "Klucz SSH już istnieje: ~/.ssh/id_ed25519"
 fi
 
-# Dodawanie klucza SSH do GitHub
+# Dodanie klucza SSH do agenta SSH
+echo "Dodawanie klucza SSH do agenta SSH..."
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519 || {
+  echo "Błąd podczas dodawania klucza SSH do agenta SSH."
+  exit 1
+}
+
+# Dodanie klucza SSH do GitHub
 echo "Dodawanie klucza SSH na GitHub..."
 if ! gh ssh-key add ~/.ssh/id_ed25519.pub -t "My Dotfiles Key"; then
   echo "Klucz SSH mógł już zostać dodany wcześniej."
 else
   echo "Klucz SSH został pomyślnie dodany do GitHub!"
 fi
+
+# Testowanie połączenia SSH z GitHub
+echo "Testowanie połączenia SSH z GitHub..."
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+  echo "Połączenie SSH z GitHub działa poprawnie."
+else
+  echo "Błąd: Połączenie SSH z GitHub nie działa. Sprawdź konfigurację klucza SSH."
+  exit 1
+fi
+
+echo "Konfiguracja GitHub CLI i klucza SSH została zakończona!"
