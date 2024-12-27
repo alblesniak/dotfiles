@@ -8,6 +8,7 @@
     ~/.tmux.conf: config/tmux/tmux.conf
     ~/.zshrc: config/zsh/zshrc
     ~/.gitconfig: config/git/gitconfig
+    ~/.warp: config/warp
 
 - shell:
 
@@ -31,3 +32,4 @@
       command: scripts/setup_repos.zsh
       stdout: true
       stderr: true
+

@@ -2,8 +2,16 @@
 
 # Change ZSH Options
 
-# Create Aliases
-alias l='ls -lAFh'
+# Aliases
+alias l="exa -lah --git"
+alias nv="nvim"
+alias rm="trash -rf"
+alias tree="exa --tree --level=2"
+alias bbd="brew bundle dump --force --describe"
+alias man="batman"
+alias grep="batgrep"
+alias trail="<<<${(F)path}"
+alias cat="bat"
 
 
 # Add Locations to $PATH Variable
