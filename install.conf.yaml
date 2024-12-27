@@ -2,16 +2,20 @@
     link:
       relink: true
 
-- clean: ['~']
+- shell:
+    - description: Tworzenie katalogów ~/.config/tmux
+      command: mkdir -p ~/.config/tmux
+      stdout: true
+      stderr: true
 
 - link:
-    ~/.tmux.conf: config/tmux/tmux.conf
+    ~/.config/tmux/tmux.conf: config/tmux/tmux.conf
+    ~/.config/tmux/plugins: config/tmux/plugins
     ~/.zshrc: config/zsh/zshrc
     ~/.gitconfig: config/git/gitconfig
     ~/.warp: config/warp
 
 - shell:
-
     - description: Aktualizacja macOS
       command: softwareupdate --all --install --force
       stdin: true
@@ -33,3 +37,7 @@
       stdout: true
       stderr: true
 
+    - description: Pobieranie plików
+      command: scripts/setup_downloads.zsh
+      stdout: true
+      stderr: true

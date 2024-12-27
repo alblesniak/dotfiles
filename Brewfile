@@ -11,6 +11,7 @@ brew "wget"
 brew "lsd"
 brew "tmux"
 brew "neovim"
+brew "trash"
 
 # Casks (Applications)
 cask "visual-studio-code"

@@ -18,19 +18,10 @@ if ! command -v gh &> /dev/null; then
   }
 fi
 
-# Sprawdzenie, czy istnieje klucz SSH
-if [ ! -f ~/.ssh/id_ed25519 ]; then
-  echo "Klucz SSH nie istnieje. Generowanie nowego klucza..."
-  ssh-keygen -t ed25519 -C "29301585+alblesniak@users.noreply.github.com" -f ~/.ssh/id_ed25519 -N "" || {
-    echo "Błąd podczas generowania klucza SSH."
-    exit 1
-  }
-  echo "Nowy klucz SSH został wygenerowany."
-fi
-
-# Sprawdzenie statusu autoryzacji GitHub CLI
+# Sprawdzenie statusu logowania
+echo "Sprawdzam status logowania do GitHub CLI..."
 if ! gh auth status &> /dev/null; then
-  echo "Rozpoczynam logowanie do GitHub..."
+  echo "Nie jesteś zalogowany. Rozpoczynam logowanie do GitHub..."
   gh auth login || {
     echo "Błąd podczas logowania do GitHub za pomocą GitHub CLI."
     exit 1
@@ -39,24 +30,31 @@ else
   echo "GitHub CLI jest już zalogowany."
 fi
 
-# Sprawdzenie i dodanie brakującego zakresu "admin:ssh_signing_key"
-if gh auth status 2>&1 | grep -q "This API operation needs the \"admin:ssh_signing_key\" scope"; then
-  echo "Dodawanie brakującego zakresu admin:ssh_signing_key do tokena autoryzacyjnego..."
-  gh auth refresh -h github.com -s admin:ssh_signing_key || {
-    echo "Błąd podczas dodawania zakresu admin:ssh_signing_key."
+# Odświeżenie tokena z zakresem admin:public_key
+if gh auth status 2>&1 | grep -q "This API operation needs the \"admin:public_key\" scope"; then
+  echo "Dodawanie brakującego zakresu admin:public_key do tokena autoryzacyjnego..."
+  gh auth refresh -h github.com -s admin:public_key || {
+    echo "Błąd podczas dodawania zakresu admin:public_key."
     exit 1
   }
-  echo "Zakres admin:ssh_signing_key został pomyślnie dodany."
 fi
 
-# Sprawdzenie, czy klucz SSH został dodany do GitHub
-if ! gh api user/keys | grep -q "My Dotfiles Key"; then
-  echo "Dodawanie klucza SSH na GitHub..."
-  gh ssh-key add ~/.ssh/id_ed25519.pub -t "My Dotfiles Key" || {
-    echo "Błąd podczas dodawania klucza SSH na GitHub."
+# Generowanie klucza SSH
+if [ ! -f ~/.ssh/id_ed25519 ]; then
+  echo "Klucz SSH nie istnieje. Generowanie nowego klucza..."
+  ssh-keygen -t ed25519 -C "29301585+alblesniak@users.noreply.github.com" -f ~/.ssh/id_ed25519 -N "" || {
+    echo "Błąd podczas generowania klucza SSH."
     exit 1
   }
-  echo "Klucz SSH został pomyślnie dodany do GitHub!"
+  echo "Nowy klucz SSH został wygenerowany."
 else
-  echo "Klucz SSH jest już dodany do GitHub."
+  echo "Klucz SSH już istnieje: ~/.ssh/id_ed25519"
+fi
+
+# Dodawanie klucza SSH do GitHub
+echo "Dodawanie klucza SSH na GitHub..."
+if ! gh ssh-key add ~/.ssh/id_ed25519.pub -t "My Dotfiles Key"; then
+  echo "Klucz SSH mógł już zostać dodany wcześniej."
+else
+  echo "Klucz SSH został pomyślnie dodany do GitHub!"
 fi
