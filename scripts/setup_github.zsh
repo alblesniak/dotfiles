@@ -1,78 +1,112 @@
 #!/bin/zsh
 
-echo "Rozpoczynam konfigurację GitHub CLI i klucza SSH..."
+# ──────────────────────────────────────────────────────────────────────────────
+# Kolorowe logi (ANSI)
+# ──────────────────────────────────────────────────────────────────────────────
+function log_info()    { echo -e "\033[1;34m[INFO]\033[0m $*"; }
+function log_success() { echo -e "\033[1;32m[SUCCESS]\033[0m $*"; }
+function log_warning() { echo -e "\033[1;33m[WARNING]\033[0m $*"; }
+function log_error()   { echo -e "\033[1;31m[ERROR]\033[0m $*"; }
 
-# Ładowanie Homebrew do PATH, jeśli nie jest dostępne
+# ──────────────────────────────────────────────────────────────────────────────
+# Ustalanie ścieżki do katalogu dotfiles (jeśli potrzebne)
+# ──────────────────────────────────────────────────────────────────────────────
+DOTFILES_DIR="$(cd "$(dirname "$0")"/.. && pwd)"
+
+log_info "Rozpoczynam konfigurację GitHub CLI i klucza SSH..."
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Upewniamy się, że brew i gh są w PATH
+# ──────────────────────────────────────────────────────────────────────────────
 if ! command -v brew &> /dev/null; then
-  echo "Ładowanie Homebrew do PATH..."
-  eval "$(/opt/homebrew/bin/brew shellenv)" || {
-    echo "Błąd: Homebrew nie jest dostępne. Sprawdź instalację."
+  log_warning "Homebrew nie jest w PATH. Ładuję brew shellenv..."
+  if [ -f /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -f /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  else
+    log_error "Błąd: Homebrew nie jest dostępne. Sprawdź instalację."
     exit 1
-  }
+  fi
 fi
 
-# Sprawdzenie i instalacja GitHub CLI (gh)
 if ! command -v gh &> /dev/null; then
-  echo "GitHub CLI (gh) nie jest dostępny. Instalowanie..."
-  brew install gh || {
-    echo "Błąd podczas instalacji GitHub CLI."
-    exit 1
-  }
-fi
-
-# Sprawdzenie statusu logowania
-if ! gh auth status &> /dev/null; then
-  echo "Nie jesteś zalogowany. Rozpoczynam logowanie do GitHub..."
-  gh auth login || {
-    echo "Błąd podczas logowania do GitHub za pomocą GitHub CLI."
-    exit 1
-  }
-else
-  echo "GitHub CLI jest już zalogowany."
-fi
-
-# Wymuś odświeżenie tokena z zakresem admin:public_key
-echo "Odświeżam token autoryzacyjny z wymaganym zakresem admin:public_key..."
-gh auth refresh -h github.com -s admin:public_key || {
-  echo "Błąd: Nie udało się odświeżyć tokena z zakresem admin:public_key."
+  log_error "GitHub CLI (gh) nie jest dostępny. Upewnij się, że został zainstalowany przez Homebrew."
   exit 1
-}
-
-# Generowanie klucza SSH
-if [ ! -f ~/.ssh/id_ed25519 ]; then
-  echo "Klucz SSH nie istnieje. Generowanie nowego klucza..."
-  ssh-keygen -t ed25519 -C "29301585+alblesniak@users.noreply.github.com" -f ~/.ssh/id_ed25519 -N "" || {
-    echo "Błąd podczas generowania klucza SSH."
-    exit 1
-  }
-  echo "Nowy klucz SSH został wygenerowany."
-else
-  echo "Klucz SSH już istnieje: ~/.ssh/id_ed25519"
 fi
 
-# Dodanie klucza SSH do agenta SSH
-echo "Dodawanie klucza SSH do agenta SSH..."
+# ──────────────────────────────────────────────────────────────────────────────
+# Sprawdzenie statusu logowania w gh
+# ──────────────────────────────────────────────────────────────────────────────
+if ! gh auth status &> /dev/null; then
+  log_info "Nie jesteś zalogowany. Rozpoczynam logowanie do GitHub..."
+  gh auth login || {
+    log_error "Błąd podczas logowania do GitHub za pomocą GitHub CLI."
+    exit 1
+  }
+  log_success "Zalogowano do GitHub CLI."
+else
+  log_info "GitHub CLI jest już zalogowany."
+fi
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Sprawdzenie, czy token ma zakres admin:public_key
+# ──────────────────────────────────────────────────────────────────────────────
+if ! gh auth status 2>&1 | grep -q "admin:public_key"; then
+  log_info "Odświeżam token autoryzacyjny z wymaganym zakresem admin:public_key..."
+  gh auth refresh -h github.com -s admin:public_key || {
+    log_error "Błąd: Nie udało się odświeżyć tokena z zakresem admin:public_key."
+    exit 1
+  }
+  log_success "Token autoryzacyjny z wymaganym zakresem admin:public_key został odświeżony."
+else
+  log_info "Token autoryzacyjny już ma wymagany zakres admin:public_key."
+fi
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Generowanie klucza SSH (o ile nie istnieje)
+# ──────────────────────────────────────────────────────────────────────────────
+if [ ! -f ~/.ssh/id_ed25519 ]; then
+  log_info "Klucz SSH nie istnieje. Generowanie nowego klucza..."
+  ssh-keygen -t ed25519 -C "29301585+alblesniak@users.noreply.github.com" -f ~/.ssh/id_ed25519 -N "" || {
+    log_error "Błąd podczas generowania klucza SSH."
+    exit 1
+  }
+  log_success "Nowy klucz SSH został wygenerowany."
+else
+  log_info "Klucz SSH już istnieje: ~/.ssh/id_ed25519"
+fi
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Dodanie klucza SSH do agenta
+# ──────────────────────────────────────────────────────────────────────────────
+log_info "Dodawanie klucza SSH do agenta SSH..."
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519 || {
-  echo "Błąd podczas dodawania klucza SSH do agenta SSH."
+  log_error "Błąd podczas dodawania klucza SSH do agenta SSH."
   exit 1
 }
+log_success "Klucz SSH został dodany do agenta."
 
+# ──────────────────────────────────────────────────────────────────────────────
 # Dodanie klucza SSH do GitHub
-echo "Dodawanie klucza SSH na GitHub..."
+# ──────────────────────────────────────────────────────────────────────────────
+log_info "Dodawanie klucza SSH na GitHub..."
 if ! gh ssh-key add ~/.ssh/id_ed25519.pub -t "My Dotfiles Key"; then
-  echo "Klucz SSH mógł już zostać dodany wcześniej."
+  log_warning "Klucz SSH mógł już zostać dodany wcześniej lub wystąpił inny błąd."
 else
-  echo "Klucz SSH został pomyślnie dodany do GitHub!"
+  log_success "Klucz SSH został pomyślnie dodany do GitHub!"
 fi
 
+# ──────────────────────────────────────────────────────────────────────────────
 # Testowanie połączenia SSH z GitHub
-echo "Testowanie połączenia SSH z GitHub..."
+# ──────────────────────────────────────────────────────────────────────────────
+log_info "Testowanie połączenia SSH z GitHub..."
 if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
-  echo "Połączenie SSH z GitHub działa poprawnie."
+  log_success "Połączenie SSH z GitHub działa poprawnie."
 else
-  echo "Błąd: Połączenie SSH z GitHub nie działa. Sprawdź konfigurację klucza SSH."
+  log_error "Połączenie SSH z GitHub nie działa. Sprawdź konfigurację klucza SSH."
   exit 1
 fi
 
-echo "Konfiguracja GitHub CLI i klucza SSH została zakończona!"
+log_success "Konfiguracja GitHub CLI i klucza SSH została zakończona!"

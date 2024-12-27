@@ -1,37 +1,57 @@
 #!/bin/zsh
 
-echo "Rozpoczynam pobieranie plików..."
+# ──────────────────────────────────────────────────────────────────────────────
+# Kolorowe logi (ANSI)
+# ──────────────────────────────────────────────────────────────────────────────
+function log_info()    { echo -e "\033[1;34m[INFO]\033[0m $*"; }
+function log_success() { echo -e "\033[1;32m[SUCCESS]\033[0m $*"; }
+function log_warning() { echo -e "\033[1;33m[WARNING]\033[0m $*"; }
+function log_error()   { echo -e "\033[1;31m[ERROR]\033[0m $*"; }
 
-# Definicja pobrań: URL -> Cel w dotfiles
+# ──────────────────────────────────────────────────────────────────────────────
+# Ustalanie ścieżki do katalogu dotfiles
+# ──────────────────────────────────────────────────────────────────────────────
+DOTFILES_DIR="$(cd "$(dirname "$0")"/.. && pwd)"
+CONFIG_DIR="${DOTFILES_DIR}/config"
+
+log_info "Rozpoczynam pobieranie plików..."
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Definicja pobrań: URL -> Cel (względem ${DOTFILES_DIR})
+# ──────────────────────────────────────────────────────────────────────────────
 downloads=(
-  "https://raw.githubusercontent.com/wkei/ayu-warp/main/themes/ayu_light.yaml ./config/warp/themes/ayu_light.yaml"
-  "https://raw.githubusercontent.com/wkei/ayu-warp/main/themes/ayu_mirage.yaml ./config/warp/themes/ayu_mirage.yaml"
-  "https://raw.githubusercontent.com/wkei/ayu-warp/main/themes/ayu_dark.yaml ./config/warp/themes/ayu_dark.yaml"
+  "https://raw.githubusercontent.com/wkei/ayu-warp/main/themes/ayu_light.yaml ${CONFIG_DIR}/warp/themes/ayu_light.yaml"
+  "https://raw.githubusercontent.com/wkei/ayu-warp/main/themes/ayu_mirage.yaml ${CONFIG_DIR}/warp/themes/ayu_mirage.yaml"
+  "https://raw.githubusercontent.com/wkei/ayu-warp/main/themes/ayu_dark.yaml ${CONFIG_DIR}/warp/themes/ayu_dark.yaml"
 )
 
-# Funkcja pobierająca plik, jeśli nie istnieje
+# ──────────────────────────────────────────────────────────────────────────────
+# Funkcja pobierająca plik (jeśli go nie ma)
+# ──────────────────────────────────────────────────────────────────────────────
 download_file() {
   local url=$1
   local target_path=$2
 
-  # Tworzenie katalogu docelowego, jeśli nie istnieje
   mkdir -p "$(dirname "$target_path")"
 
   if [ -f "$target_path" ]; then
-    echo "Plik już istnieje: $target_path"
+    log_warning "Plik już istnieje, pomijam pobieranie: $target_path"
   else
-    echo "Pobieram plik: $url -> $target_path"
+    log_info "Pobieram plik: $url -> $target_path"
     curl -sSL "$url" -o "$target_path" || {
-      echo "Błąd podczas pobierania pliku: $url"
+      log_error "Błąd podczas pobierania pliku: $url"
       exit 1
     }
+    log_success "Plik został pobrany: $target_path"
   fi
 }
 
+# ──────────────────────────────────────────────────────────────────────────────
 # Iteracja przez definicje pobrań
+# ──────────────────────────────────────────────────────────────────────────────
 for entry in "${downloads[@]}"; do
   IFS=' ' read -r url target_path <<< "$entry"
   download_file "$url" "$target_path"
 done
 
-echo "Wszystkie pliki zostały pobrane!"
+log_success "Wszystkie pliki zostały pobrane!"

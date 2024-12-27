@@ -3,10 +3,9 @@
 # Change ZSH Options
 
 # Aliases
-alias l="exa -lah --git"
+alias l="lsd -lah"
 alias nv="nvim"
 alias rm="trash -rf"
-alias tree="exa --tree --level=2"
 alias bbd="brew bundle dump --force --describe"
 alias man="batman"
 alias grep="batgrep"
@@ -27,5 +26,7 @@ function mkcd() {
 
 
 export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/trash/bin:$PATH"
+
+# Starship initializaton
+eval "$(starship init zsh)"

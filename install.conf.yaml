@@ -1,26 +1,24 @@
 - defaults:
     link:
       relink: true
-
-- shell:
-    - description: Tworzenie katalogów ~/.config/tmux
-      command: mkdir -p ~/.config/tmux
-      stdout: true
-      stderr: true
+      force: true
+      create: true
 
 - link:
-    ~/.config/tmux/tmux.conf: config/tmux/tmux.conf
-    ~/.config/tmux/plugins: config/tmux/plugins
+    ~/.config/nvim: config/nvim
+    ~/.config/tmux: config/tmux
     ~/.zshrc: config/zsh/zshrc
     ~/.gitconfig: config/git/gitconfig
     ~/.warp: config/warp
+    ~/.config/starship.toml: config/starship/starship.toml
+    ~/.config/ghostty/config: config/ghostty/config
 
 - shell:
-    - description: Aktualizacja macOS
-      command: softwareupdate --all --install --force
-      stdin: true
-      stdout: true
-      stderr: true
+    # - description: Aktualizacja macOS
+    #   command: softwareupdate --all --install --force
+    #   stdin: true
+    #   stdout: true
+    #   stderr: true
 
     - description: Instalacja Homebrew
       command: scripts/setup_homebrew.zsh
@@ -41,3 +39,9 @@
       command: scripts/setup_downloads.zsh
       stdout: true
       stderr: true
+
+    - description: Konfiguracja macOS
+      command: scripts/setup_macos.zsh
+      stdout: true
+      stderr: true
+
