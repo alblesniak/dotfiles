@@ -1,5 +1,5 @@
 # Set Variables
-
+export HOMEBREW_CASK_OPTS="--no-quarantine"
 # Change ZSH Options
 
 # Aliases
@@ -12,13 +12,16 @@ alias grep="batgrep"
 alias trail="<<<${(F)path}"
 alias cat="bat"
 
-
-# Add Locations to $PATH Variable
+# Custom options
+setopt auto_cd
 
 # Write Handy Functions
 function mkcd() {
   mkdir -p "$@" && cd "$_";
 }
+
+# Dodaj "code" command do PATH
+
 
 # Use ZSH Plugins
 
@@ -27,6 +30,10 @@ function mkcd() {
 
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/trash/bin:$PATH"
+export PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # Starship initializaton
 eval "$(starship init zsh)"
+
+# Get rid of "last login" message
+export LOGINFOWARNINGS=""

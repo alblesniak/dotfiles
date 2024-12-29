@@ -1,0 +1,72 @@
+{
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "explorer.compactFolders": false,
+    "workbench.colorTheme": "Ayu Dark",
+    "workbench.iconTheme": "ayu",
+    "workbench.tree.renderIndentGuides": "none",
+    "workbench.activityBar.location": "hidden",
+    "workbench.statusBar.visible": false,
+    // "workbench.editor.showTabs": "none",
+    "workbench.startupEditor": "none",
+    // "workbench.tips.enabled": false,
+    "window.commandCenter": false,
+    "window.titleBarStyle": "custom",
+    "window.customTitleBarVisibility": "never",
+    "editor.minimap.enabled": false,
+    "editor.guides.indentation": false,
+    "editor.renderWhitespace": "none",
+    "editor.matchBrackets": "never",
+    "editor.lightbulb.enabled": "off",
+    // "editor.hover.enabled": false,
+    "editor.showFoldingControls": "never",
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.overviewRulerBorder": false,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.fontSize": 16,
+    "editor.fontFamily": "'Hack Nerd Font', 'JetBrains Mono Nerd Font', monospace",
+    "editor.fontLigatures": true,
+    "editor.lineHeight": 1.5,
+    "breadcrumbs.enabled": false,
+    "git.decorations.enabled": false,
+    "scm.diffDecorations": "none",
+    "files.insertFinalNewline": true,
+    "files.autoSave": "afterDelay",
+    "extensions.ignoreRecommendations": true,
+    "terminal.integrated.fontFamily": "Hack Nerd Font",
+    "terminal.integrated.tabs.enabled": false,
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.lineHeight": 1.2,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.compositeKeys": {
+        "jj": {
+            "command": "vscode-neovim.escape"
+        },
+        "jk": {
+            "command": "vscode-neovim.lua",
+            "args": [
+                [
+                    "local code = require('vscode')",
+                    "code.action('vscode-neovim.escape')",
+                    "code.action('workbench.action.files.save')"
+                ]
+            ]
+        }
+    },
+    "workbench.colorCustomizations": {
+        "editor.wordHighlightBorder": "#00000000",
+        "editor.wordHighlightStrongBorder": "#00000000",
+        "editor.wordHighlightBackground": "default",
+        "editor.wordHighlightStrongBackground": "default"
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+
+    // Here you can add custom style
+    "vscode_custom_css.imports": [
+        "file:///Users/alb/.config/Code/User/custom-styles.css"
+    ]
+}

@@ -1,0 +1,11 @@
+asvetliakov.vscode-neovim
+esbenp.prettier-vscode
+github.copilot
+github.copilot-chat
+ionutvmi.path-autocomplete
+mechatroner.rainbow-csv
+ms-python.debugpy
+ms-python.python
+ms-python.vscode-pylance
+teabyii.ayu
+tomoki1207.pdf

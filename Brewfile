@@ -17,6 +17,7 @@ brew "bat-extras"
 brew "tree"
 brew "dockutil"
 brew "starship"
+brew "mas"
 
 # Casks (Applications)
 cask "brave-browser"

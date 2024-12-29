@@ -12,36 +12,43 @@
     ~/.warp: config/warp
     ~/.config/starship.toml: config/starship/starship.toml
     ~/.config/ghostty/config: config/ghostty/config
+    ~/.config/Code/User: config/vscode
+# - shell:
+# - description: Aktualizacja macOS
+#   command: softwareupdate --all --install --force
+#   stdin: true
+#   stdout: true
+#   stderr: true
 
-- shell:
-    # - description: Aktualizacja macOS
-    #   command: softwareupdate --all --install --force
-    #   stdin: true
-    #   stdout: true
-    #   stderr: true
+# - description: Instalacja Homebrew
+#   command: scripts/setup_homebrew.zsh
+#   stdout: true
+#   stderr: true
 
-    - description: Instalacja Homebrew
-      command: scripts/setup_homebrew.zsh
-      stdout: true
-      stderr: true
+# - description: Generowanie klucza SSH i dodanie go do GitHub
+#   command: scripts/setup_github.zsh
+#   stdout: true
+#   stderr: true
 
-    - description: Generowanie klucza SSH i dodanie go do GitHub
-      command: scripts/setup_github.zsh
-      stdout: true
-      stderr: true
+# - description: Instalacja repozytoriów
+#   command: scripts/setup_repos.zsh
+#   stdout: true
+#   stderr: true
 
-    - description: Instalacja repozytoriów
-      command: scripts/setup_repos.zsh
-      stdout: true
-      stderr: true
+# - description: Pobieranie plików
+#   command: scripts/setup_downloads.zsh
+#   stdout: true
+#   stderr: true
 
-    - description: Pobieranie plików
-      command: scripts/setup_downloads.zsh
-      stdout: true
-      stderr: true
+# - description: Konfiguracja macOS
+#   command: scripts/setup_macos.zsh
+#   stdout: true
+#   stderr: true
 
-    - description: Konfiguracja macOS
-      command: scripts/setup_macos.zsh
-      stdout: true
-      stderr: true
-
+# - description: Installing VS Code extensions
+#   command: |
+#     if command -v code &> /dev/null; then
+#       while read -r extension; do
+#         code --install-extension "$extension" || echo "Failed to install $extension"
+#       done < config/vscode/extensions.txt
+#     fi
