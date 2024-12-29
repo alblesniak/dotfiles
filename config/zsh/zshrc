@@ -1,39 +1,79 @@
-# Set Variables
+# ──────────────────────────────────────────────────────────────────────────────
+# Zmienne Środowiskowe
+# ──────────────────────────────────────────────────────────────────────────────
 export HOMEBREW_CASK_OPTS="--no-quarantine"
-# Change ZSH Options
+export NULLCMD=bat
+export N_PREFIX="$HOME/.n"
+export PREFIX="$N_PREFIX"
 
-# Aliases
-alias l="lsd -lah"
-alias nv="nvim"
-alias rm="trash -rf"
-alias bbd="brew bundle dump --force --describe"
-alias man="batman"
-alias grep="batgrep"
-alias trail="<<<${(F)path}"
-alias cat="bat"
-
-# Custom options
+# ──────────────────────────────────────────────────────────────────────────────
+# Opcje Zsh
+# ──────────────────────────────────────────────────────────────────────────────
 setopt auto_cd
 
-# Write Handy Functions
-function mkcd() {
-  mkdir -p "$@" && cd "$_";
+# ──────────────────────────────────────────────────────────────────────────────
+# Aliasów
+# ──────────────────────────────────────────────────────────────────────────────
+alias l="lsd -lah"                          # List directory contents with lsd
+alias nv="nvim"                             # Alias for nvim
+alias rm="trash -rf"                        # Use trash instead of rm
+alias bbd="brew bundle dump --force --describe"  # Dump Brewfile with descriptions
+alias man="batman"                          # Use batman as man
+alias grep="batgrep"                        # Use batgrep as grep
+alias cat="bat"                             # Use bat as cat
+
+# Definicja funkcji trail
+function trail() {
+  # Wypisuje zawartość zmiennej PATH w formie jednej ścieżki na linię
+  print -l ${(s/:/)PATH}
 }
 
-# Dodaj "code" command do PATH
+# ──────────────────────────────────────────────────────────────────────────────
+# Funkcje
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Funkcja do tworzenia katalogu i przejścia do niego
+mkcd() {
+  mkdir -p "$@" && cd "$_"
+}
+
+# Funkcja do dodawania ścieżek do PATH, jeśli jeszcze nie istnieją
+add_to_path() {
+  if [[ ":$PATH:" != *":$1:"* ]]; then
+    export PATH="$1:$PATH"
+  fi
+}
 
 
-# Use ZSH Plugins
+# Dodanie Homebrew i innych binarnych ścieżek do PATH
+add_to_path "/opt/homebrew/bin"
+add_to_path "/opt/homebrew/opt/trash/bin"
+add_to_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+add_to_path "$PATH:$N_PREFIX/bin"
 
-# ...and Other Surprises
 
-
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/opt/trash/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
-# Starship initializaton
+# ──────────────────────────────────────────────────────────────────────────────
+# Inicjalizacja Promptów
+# ──────────────────────────────────────────────────────────────────────────────
+# Inicjalizacja Starship Prompt
 eval "$(starship init zsh)"
 
-# Get rid of "last login" message
-export LOGINFOWARNINGS=""
+# ──────────────────────────────────────────────────────────────────────────────
+# Inne Ustawienia
+# ──────────────────────────────────────────────────────────────────────────────
+# Wyłączenie komunikatów "last login"
+if [[ -n "$SSH_CONNECTION" ]]; then
+  touch ~/.hushlogin
+fi
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Uzupełnienia i Dodatki
+# ──────────────────────────────────────────────────────────────────────────────
+# Możesz dodać tutaj dodatkowe konfiguracje, wtyczki lub inne ustawienia.
+
+# Przykład dodania wtyczek Zsh (jeśli używasz menedżera wtyczek)
+# source /path/to/your/plugin_manager.zsh
+# zinit light zsh-users/zsh-syntax-highlighting
+# zinit light zsh-users/zsh-autosuggestions
+
+# ...i inne niespodzianki

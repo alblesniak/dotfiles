@@ -68,8 +68,8 @@ dockutil --no-restart --add "/Applications/Brave Browser.app"
 dockutil --no-restart --add "/Applications/Visual Studio Code.app"
 dockutil --no-restart --add "/Applications/Warp.app"
 dockutil --no-restart --add "/Applications/WhatsApp.app"
-dockutil --no-restart --add "/Applications/Messages.app"
-dockutil --no-restart --add "/Applications/Calendar.app"
+dockutil --no-restart --add "/System/Applications/Messages.app"
+dockutil --no-restart --add "/System/Applications/Calendar.app"
 dockutil --no-restart --add "/Applications/Obsidian.app"
 
 # Zrestartuj Dock, aby zastosować zmiany

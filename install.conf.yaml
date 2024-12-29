@@ -20,15 +20,15 @@
     #   stdout: true
     #   stderr: true
 
-    # - description: Instalacja Homebrew
-    #   command: scripts/setup_homebrew.zsh
-    #   stdout: true
-    #   stderr: true
-
-    - description: Generowanie klucza SSH i dodanie go do GitHub
-      command: scripts/setup_github.zsh
+    - description: Instalacja Homebrew
+      command: scripts/setup_homebrew.zsh
       stdout: true
       stderr: true
+
+    # - description: Generowanie klucza SSH i dodanie go do GitHub
+    #   command: scripts/setup_github.zsh
+    #   stdout: true
+    #   stderr: true
 
     # - description: Instalacja repozytoriów
     #   command: scripts/setup_repos.zsh
@@ -40,7 +40,12 @@
     #   stdout: true
     #   stderr: true
 
-    # - description: Konfiguracja macOS
-    #   command: scripts/setup_macos.zsh
-    #   stdout: true
-    #   stderr: true
+    - description: Konfiguracja macOS
+      command: scripts/setup_macos.zsh
+      stdout: true
+      stderr: true
+
+    - description: Instalacja node.js
+      command: scripts/setup_node.zsh
+      stdout: true
+      stderr: true

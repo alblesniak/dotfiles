@@ -10,8 +10,6 @@ function log_error()   { echo -e "\033[1;31m[ERROR]\033[0m $*"; }
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Ustalanie ścieżki do głównego katalogu dotfiles
-# Zakładamy, że skrypt jest w scripts/, więc idziemy o jeden poziom wyżej
-# ──────────────────────────────────────────────────────────────────────────────
 DOTFILES_DIR="$(cd "$(dirname "$0")"/.. && pwd)"
 BREWFILE_PATH="${DOTFILES_DIR}/Brewfile"
 
@@ -19,7 +17,6 @@ log_info "Rozpoczynam konfigurację Homebrew i pakietów..."
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Wymuszenie uprawnień administratora na początku
-# ──────────────────────────────────────────────────────────────────────────────
 if ! sudo -v; then
   log_error "Wymagane są uprawnienia administratora, aby kontynuować."
   exit 1
@@ -27,7 +24,6 @@ fi
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Instalacja Homebrew (jeśli nie istnieje)
-# ──────────────────────────────────────────────────────────────────────────────
 if ! command -v brew &> /dev/null; then
   log_info "Homebrew nie został znaleziony. Instalacja..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || {
@@ -35,36 +31,23 @@ if ! command -v brew &> /dev/null; then
     exit 1
   }
 
-  # Instalator sam ustawia /usr/local lub /opt/homebrew w zależności od architektury.
-  # Ładujemy brew shellenv do bieżącej sesji
-  if [ -f /opt/homebrew/bin/brew ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-
-  elif [ -f /usr/local/bin/brew ]; then
-    eval "$(/usr/local/bin/brew shellenv)"
+  # Automatyczne dodanie brew do PATH
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)" || {
     echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/usr/local/bin/brew shellenv)" || {
+      log_warning "Nie znaleziono ścieżki do zainstalowanego Homebrew. Dodaj ją ręcznie do PATH."
+    }
+  }
 
-  else
-    log_warning "Nie znaleziono ścieżki do zainstalowanego Homebrew. Dodaj ją ręcznie do PATH."
-  fi
-
-  log_info "Homebrew został zainstalowany pomyślnie."
+  log_success "Homebrew został zainstalowany pomyślnie."
 else
   log_info "Homebrew jest już zainstalowany."
-fi
-
-# ──────────────────────────────────────────────────────────────────────────────
-# Sprawdzanie Homebrew w PATH
-# ──────────────────────────────────────────────────────────────────────────────
-if ! command -v brew &> /dev/null; then
-  log_error "Homebrew nie jest dostępne w PATH. Spróbuj zrestartować terminal lub ręcznie załadować PATH."
-  exit 1
+  eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Instalacja pakietów z Brewfile
-# ──────────────────────────────────────────────────────────────────────────────
 if [[ -f "$BREWFILE_PATH" ]]; then
   log_info "Znaleziono Brewfile w $BREWFILE_PATH. Instalowanie pakietów..."
   brew bundle --file="$BREWFILE_PATH" || {
@@ -77,10 +60,9 @@ else
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Upewnij się, że GitHub CLI (gh) jest dostępny (zainstalowany przez Brewfile)
-# ──────────────────────────────────────────────────────────────────────────────
+# Upewnienie się, że GitHub CLI (gh) jest zainstalowany
 if ! command -v gh &> /dev/null; then
-  log_warning "GitHub CLI (gh) nie został zainstalowany przez Brewfile. Instaluję ręcznie..."
+  log_info "GitHub CLI (gh) nie został zainstalowany przez Brewfile. Instaluję ręcznie..."
   brew install gh || {
     log_error "Błąd podczas instalacji GitHub CLI (gh)."
     exit 1
@@ -88,15 +70,6 @@ if ! command -v gh &> /dev/null; then
   log_success "GitHub CLI został pomyślnie zainstalowany!"
 else
   log_info "GitHub CLI jest już dostępny."
-fi
-
-# ──────────────────────────────────────────────────────────────────────────────
-# Ostateczne załadowanie PATH
-# ──────────────────────────────────────────────────────────────────────────────
-if [ -f /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ -f /usr/local/bin/brew ]; then
-  eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 log_success "Konfiguracja Homebrew i pakietów zakończona!"

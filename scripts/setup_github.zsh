@@ -39,7 +39,8 @@ fi
 # Sprawdzenie statusu logowania w gh
 # ──────────────────────────────────────────────────────────────────────────────
 if ! gh auth status &> /dev/null; then
-  log_info "Nie jesteś zalogowany. Rozpoczynam logowanie do GitHub..."
+  log_info "Nie jesteś zalogowany. Rozpoczynam interaktywny proces logowania do GitHub..."
+  log_info "Otworzy się przeglądarka, w której będziesz musiał zalogować się do swojego konta GitHub i autoryzować aplikację GitHub CLI."
   gh auth login || {
     log_error "Błąd podczas logowania do GitHub za pomocą GitHub CLI."
     exit 1
@@ -53,7 +54,9 @@ fi
 # Sprawdzenie, czy token ma zakres admin:public_key
 # ──────────────────────────────────────────────────────────────────────────────
 if ! gh auth status 2>&1 | grep -q "admin:public_key"; then
-  log_info "Odświeżam token autoryzacyjny z wymaganym zakresem admin:public_key..."
+  log_info "Twój token dostępu nie ma wymaganych uprawnień (admin:public_key)."
+  log_info "Rozpoczynam odświeżanie tokena autoryzacyjnego z dodatkowym zakresem uprawnień."
+  log_info "Otworzy się przeglądarka, gdzie będziesz musiał potwierdzić rozszerzenie uprawnień tokena."
   gh auth refresh -h github.com -s admin:public_key || {
     log_error "Błąd: Nie udało się odświeżyć tokena z zakresem admin:public_key."
     exit 1
