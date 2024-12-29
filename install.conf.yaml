@@ -8,6 +8,7 @@
     ~/.config/nvim: config/nvim
     ~/.config/tmux: config/tmux
     ~/.zshrc: config/zsh/zshrc
+    ~/.zshenv: config/zsh/zshenv
     ~/.gitconfig: config/git/gitconfig
     ~/.warp: config/warp
     ~/.config/starship.toml: config/starship/starship.toml

@@ -1,23 +1,23 @@
 #!/usr/bin/env zsh
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────
 # Kolorowe logi (ANSI)
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 function log_info()    { echo -e "\033[1;34m[INFO]\033[0m $*"; }
 function log_success() { echo -e "\033[1;32m[SUCCESS]\033[0m $*"; }
 function log_warning() { echo -e "\033[1;33m[WARNING]\033[0m $*"; }
 function log_error()   { echo -e "\033[1;31m[ERROR]\033[0m $*"; }
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────
 # Ustalanie ścieżki do katalogu dotfiles
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 DOTFILES_DIR="$(cd "$(dirname "$0")"/.. && pwd)"
 
 log_info "<<< Starting macOS Setup >>>"
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────
 # Konfiguracja języka i regionu systemu (ustawienie na polski)
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 log_info "Configuring system language and region..."
 
 # Ustaw język systemowy na polski
@@ -37,9 +37,9 @@ systemsetup -settimezone "Europe/Warsaw" >/dev/null 2>&1
 
 log_success "System language and region configured to Polish."
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 # Konfiguracja Dock
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 log_info "Configuring Dock..."
 
 # Ustaw pozycję Docka na lewą stronę
@@ -76,9 +76,9 @@ dockutil --no-restart --add "/Applications/Obsidian.app"
 killall Dock
 log_success "Dock configuration applied."
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 # Konfiguracja Finder
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 log_info "Configuring Finder..."
 
 # Wyświetl ścieżkę w dolnej części okna Findera
@@ -96,14 +96,25 @@ defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false"
 # Ustaw foldery na górze podczas sortowania na pulpicie
 defaults write com.apple.finder "_FXSortFoldersFirstOnDesktop" -bool "true"
 
+# Zawsze wyświetl pliki ukryte
+defaults write com.apple.finder "AppleShowAllFiles" -bool "true"
+
+# Zawsze pokazuj rozszerzenia plików
+defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
+
+# Dodaj folder domowy, Filmy, Muzykę i Obrazki do Ulubionych w Finderze
+mysides add "Home" "file://$HOME/"
+mysides add "Movies" "file://$HOME/Movies/"
+mysides add "Music" "file://$HOME/Music/"
+mysides add "Pictures" "file://$HOME/Pictures/"
+
 # Zrestartuj Finder, aby zastosować zmiany
 killall Finder
 log_success "Finder configuration applied."
 
-
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 # Konfiguracja klawiatury
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────
 
 # Przytrzymanie klawisza powoduje powturzenia
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
@@ -111,7 +122,5 @@ defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 # Przyspieszenia powturzeń klawiszy
 defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
-
-
 
 log_success "<<< macOS Setup Complete >>>"
