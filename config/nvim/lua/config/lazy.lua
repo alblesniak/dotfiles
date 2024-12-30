@@ -9,41 +9,4 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Konfiguracja pluginów
-require('lazy').setup({
-    -- LSP
-    {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-        },
-    },
-    
-    -- Zarządzanie LSP
-    {
-        'williamboman/mason.nvim',
-        build = ':MasonUpdate',
-        config = function() require('mason').setup() end,
-    },
-    {
-        'williamboman/mason-lspconfig.nvim',
-        config = function()
-            require('mason-lspconfig').setup {
-                ensure_installed = { 'pyright', 'ts_ls' },
-            }
-        end,
-    },
-
-    -- Motyw
-    {
-        'Shatur/neovim-ayu',
-        config = function()
-            require('ayu').setup({
-                mirage = false,
-                terminal = true,
-            })
-            require('ayu').colorscheme()
-        end,
-    }
-})
+require('lazy').setup(require('config.plugins'), {})

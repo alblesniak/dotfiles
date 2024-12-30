@@ -54,6 +54,8 @@ cask "font-sauce-code-pro-nerd-font"
 cask "ghostty"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Control your tools with a few keystrokes
+cask "raycast"
 # Music streaming service
 cask "spotify"
 # Open-source code editor

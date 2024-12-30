@@ -102,12 +102,6 @@ defaults write com.apple.finder "AppleShowAllFiles" -bool "true"
 # Zawsze pokazuj rozszerzenia plików
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
 
-# Dodaj folder domowy, Filmy, Muzykę i Obrazki do Ulubionych w Finderze
-mysides add "Home" "file://$HOME/"
-mysides add "Movies" "file://$HOME/Movies/"
-mysides add "Music" "file://$HOME/Music/"
-mysides add "Pictures" "file://$HOME/Pictures/"
-
 # Zrestartuj Finder, aby zastosować zmiany
 killall Finder
 log_success "Finder configuration applied."
@@ -122,5 +116,16 @@ defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 # Przyspieszenia powturzeń klawiszy
 defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
+
+# # Wyłącz skrót Cmd + Spacja dla Spotlight
+# /usr/libexec/PlistBuddy -c "Delete :AppleSymbolicHotKeys:64" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+# /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
+
+# # Ustaw Cmd + Spacja jako globalny skrót dla Raycast
+# defaults write com.raycast.macos Hotkey -string "⌘ "
+
+# # Zrestartuj odpowiednie procesy, aby zmiany zostały zastosowane
+# killall SystemUIServer
 
 log_success "<<< macOS Setup Complete >>>"

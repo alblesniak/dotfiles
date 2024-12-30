@@ -13,7 +13,7 @@ return {
             -- Podstawowa konfiguracja serwerów LSP
             local servers = {
                 pyright = {},
-                tsserver = {},
+		ts_ls = {},
                 lua_ls = {
                     settings = {
                         Lua = {
