@@ -15,7 +15,7 @@ DOTFILES_DIR="$(cd "$(dirname "$0")"/.. && pwd)"
 CONFIG_DIR="${DOTFILES_DIR}/config"
 
 log_info "Rozpoczynam pobieranie plików..."
-
+# comment
 # ──────────────────────────────────────────────────────────────────────────────
 # Definicja pobrań: URL -> Cel (względem ${DOTFILES_DIR})
 # ──────────────────────────────────────────────────────────────────────────────

@@ -67,13 +67,28 @@ if [[ -n "$SSH_CONNECTION" ]]; then
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Inicjalizacja Zinit
+# ──────────────────────────────────────────────────────────────────────────────
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Sprawdź, czy Zinit został zainstalowany, i wczytaj go
+if [ -f "${ZINIT_HOME}/zinit.zsh" ]; then
+  source "${ZINIT_HOME}/zinit.zsh"
+else
+  echo "[WARNING] Zinit nie został zainstalowany. Uruchom 'scripts/setup_repos.zsh'."
+fi
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Zinit plugins 
+# ──────────────────────────────────────────────────────────────────────────────
+
+zinit light zsh-users/zsh-syntax-highlightg
+zinit light zsh-users/zsh-completions
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Uzupełnienia i Dodatki
 # ──────────────────────────────────────────────────────────────────────────────
-# Możesz dodać tutaj dodatkowe konfiguracje, wtyczki lub inne ustawienia.
 
-# Przykład dodania wtyczek Zsh (jeśli używasz menedżera wtyczek)
-# source /path/to/your/plugin_manager.zsh
-# zinit light zsh-users/zsh-syntax-highlighting
-# zinit light zsh-users/zsh-autosuggestions
-
-# ...i inne niespodzianki
+# Load complitions
+autoload -U compinit && compinit

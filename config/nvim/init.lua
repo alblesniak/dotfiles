@@ -55,6 +55,8 @@ vim.keymap.set('v', 'p', 'P', { desc = 'Wklej bez nadpisywania schowka' })
 vim.keymap.set({ 'n', 'v' }, 'd', '"_d', { desc = 'Usuń bez nadpisywania schowka' })
 vim.keymap.set({ 'n', 'v' }, 'dd', '"_dd', { desc = 'Usuń całą linię bez nadpisywania schowka' })
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'Cofnij operację (redo)' })
+vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true, desc = 'Wychodzenie z INSERT za pomocą jj' })
+vim.keymap.set('i', 'jk', '<Esc>:w<CR>', { noremap = true, silent = true, desc = 'Wyjdź z INSERT i zapisz plik' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Usuń podświetlenie wyszukiwania' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-h>', { desc = 'Przejdź do okna po lewej' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-j>', { desc = 'Przejdź do okna poniżej' })
@@ -62,6 +64,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-k>', { desc = 'Przejdź do okna powyżej' 
 vim.keymap.set('n', '<C-;>', '<C-w><C-l>', { desc = 'Przejdź do okna po prawej' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Wyjście z trybu terminala' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Otwórz listę diagnostyczną' })
+vim.keymap.set('n', '<leader>s', ':w<CR>', { desc = 'Zapisz plik' })
 
 -- [[ Automatyczne podświetlenie podczas kopiowania ]]
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -74,16 +77,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Instalacja i konfiguracja Lazy.nvim ]]
 require('lazy').setup({
-  {
-    'ayu-theme/ayu-vim',
-    priority = 1000,
-    config = function()
-      vim.opt.termguicolors = true
-      vim.g.ayucolor = 'dark'
-      vim.cmd.colorscheme('ayu')
-    end,
-  },
-  {
+ {
     'neovim/nvim-lspconfig',
     dependencies = {
       'williamboman/mason.nvim',
@@ -105,6 +99,20 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'Shatur/neovim-ayu',
+    config = function()
+        require('ayu').setup({
+            mirage = false, -- Użyj `dark` jako domyślnego wariantu
+            terminal = true, -- Kolory terminala zarządzane przez motyw
+        })
+        require('ayu').colorscheme() -- Ustawienia motywu kolorów
+    end,
+  },
+  {
+    'mg979/vim-visual-multi',
+    branch = 'master',
+  }
 })
 
 -- [[ Konfiguracja LSP ]]
@@ -125,3 +133,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- [[ Konfiguracja multi-cursor ]]
+-- Plugin "vim-visual-multi" umożliwia używanie wielu kursorów.
+-- Kluczowe mapowania:
+-- 1. W trybie wizualnym zaznacz kilka linii, a następnie:
+--    - Naciśnij `mi`, aby dodać kursor na początku każdej zaznaczonej linii.
+--    - Naciśnij `ma`, aby dodać kursor na końcu każdej zaznaczonej linii.
+-- 2. Użyj standardowych poleceń edycyjnych, aby zmienić tekst dla wszystkich kursorów jednocześnie.
+vim.keymap.set('v', 'mi', ':<C-u>call VM_Start({"cursor_positions": "start"})<CR>', { desc = 'Dodaj multi-cursory na początku linii' })
+vim.keymap.set('v', 'ma', ':<C-u>call VM_Start({"cursor_positions": "end"})<CR>', { desc = 'Dodaj multi-cursory na końcu linii' })

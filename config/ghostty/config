@@ -1,8 +1,8 @@
 # Ustawienia czcionki
 font-family = "Hack Nerd Font"
 font-size = 18
-theme = "ayu"
+theme = "ayu-dark-theme"
 
 window-padding-x = 10
-window-padding-y = 5
+window-padding-y = 10
 window-padding-balance = true
