@@ -5,6 +5,8 @@ brew "bat"
 brew "bat-extras"
 # Tool for managing dock items
 brew "dockutil"
+# Command-line fuzzy finder written in Go
+brew "fzf"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
