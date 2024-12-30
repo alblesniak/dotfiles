@@ -21,6 +21,7 @@ alias bbd="brew bundle dump --force --describe"  # Dump Brewfile with descriptio
 alias man="batman"                          # Use batman as man
 alias grep="batgrep"                        # Use batgrep as grep
 alias cat="bat"                             # Use bat as cat
+alias ls="ls --color"
 
 # Definicja funkcji trail
 function trail() {
@@ -85,10 +86,36 @@ fi
 
 zinit light zsh-users/zsh-syntax-highlightg
 zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Uzupełnienia i Dodatki
 # ──────────────────────────────────────────────────────────────────────────────
 
-# Load complitions
+# ZSH COMPLETIONS: Load complitions
 autoload -U compinit && compinit
+
+# ZSH AUTOSUGGESTIONS: History
+HISTSIZE=5000
+HISTFILE=~./zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# ZSH AUTOSUGGESTIONS: Keybindings
+# Nawigacja w historii:
+bindkey '^k' history-search-forward   # 'k' - nawigacja w dół
+bindkey '^l' history-search-backward  # 'l' - nawigacja w górę
+
+# Akceptowanie i wykonywanie sugestii:
+bindkey '^j' autosuggest-accept       # 'j' - przyjęcie bieżącej sugestii
+bindkey '^;' autosuggest-execute      # ';' - wykonanie bieżącej sugestii
+
+# ZSH_AUTOSUGGESTIONS: Complition styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
