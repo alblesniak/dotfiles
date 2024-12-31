@@ -117,15 +117,15 @@ defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
 
-# # Wyłącz skrót Cmd + Spacja dla Spotlight
-# /usr/libexec/PlistBuddy -c "Delete :AppleSymbolicHotKeys:64" ~/Library/Preferences/com.apple.symbolichotkeys.plist
-# /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+# Wyłącz skrót Cmd + Spacja dla Spotlight
+/usr/libexec/PlistBuddy -c "Delete :AppleSymbolicHotKeys:64" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+/usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
 
 
-# # Ustaw Cmd + Spacja jako globalny skrót dla Raycast
-# defaults write com.raycast.macos Hotkey -string "⌘ "
+# Ustaw Cmd + Spacja jako globalny skrót dla Raycast
+defaults write com.raycast.macos Hotkey -string "⌘ "
 
-# # Zrestartuj odpowiednie procesy, aby zmiany zostały zastosowane
-# killall SystemUIServer
+# Zrestartuj odpowiednie procesy, aby zmiany zostały zastosowane
+killall SystemUIServer
 
 log_success "<<< macOS Setup Complete >>>"

@@ -1,4 +1,5 @@
 tap "homebrew/bundle"
+tap "koekeishiya/formulae"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Bash scripts that integrate bat with various command-line tools
@@ -37,6 +38,10 @@ brew "uv"
 brew "wget"
 # UNIX shell (command interpreter)
 brew "zsh"
+# Simple hotkey-daemon for macOS.
+brew "koekeishiya/formulae/skhd"
+# A tiling window manager for macOS based on binary space partitioning.
+brew "koekeishiya/formulae/yabai"
 # Web browser focusing on privacy
 cask "brave-browser"
 cask "font-code-new-roman-nerd-font"
@@ -73,6 +78,8 @@ vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "ionutvmi.path-autocomplete"
 vscode "mechatroner.rainbow-csv"
+vscode "ms-python.debugpy"
 vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
 vscode "teabyii.ayu"
 vscode "tomoki1207.pdf"

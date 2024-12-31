@@ -23,54 +23,38 @@ alias grep="batgrep"                        # Use batgrep as grep
 alias cat="bat"                             # Use bat as cat
 alias ls="lsd --color=always"
 
-# Definicja funkcji trail
-function trail() {
-  # Wypisuje zawartość zmiennej PATH w formie jednej ścieżki na linię
-  print -l ${(s/:/)PATH}
-}
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Funkcje
 # ──────────────────────────────────────────────────────────────────────────────
 
-# Funkcja do tworzenia katalogu i przejścia do niego
-mkcd() {
-  mkdir -p "$@" && cd "$_"
-}
-
-# Funkcja do dodawania ścieżek do PATH, jeśli jeszcze nie istnieją
-add_to_path() {
-  if [[ ":$PATH:" != *":$1:"* ]]; then
-    export PATH="$1:$PATH"
-  fi
-}
+# Ładowanie funkcji z ~/.config/zsh/functions/
+for func_file in ~/.config/zsh/functions/*.zsh; do
+    if [[ -f "$func_file" ]]; then
+        source "$func_file"
+    fi
+done
 
 
-# Dodanie Homebrew i innych binarnych ścieżek do PATH
+# ──────────────────────────────────────────────────────────────────────────────
+# Dodawanie ścieżek do PATH
+# ──────────────────────────────────────────────────────────────────────────────
+
 add_to_path "/opt/homebrew/bin"
 add_to_path "/opt/homebrew/opt/trash/bin"
 add_to_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 add_to_path "$PATH:$N_PREFIX/bin"
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Shell integrations 
-# ──────────────────────────────────────────────────────────────────────────────
+# # ──────────────────────────────────────────────────────────────────────────────
+# # Shell integrations 
+# # ──────────────────────────────────────────────────────────────────────────────
 eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Inne Ustawienia
-# ──────────────────────────────────────────────────────────────────────────────
-# Wyłączenie komunikatów "last login"
-if [[ -n "$SSH_CONNECTION" ]]; then
-  touch ~/.hushlogin
-fi
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# Inicjalizacja Zinit
-# ──────────────────────────────────────────────────────────────────────────────
+# # ──────────────────────────────────────────────────────────────────────────────
+# # Inicjalizacja Zinit
+# # ──────────────────────────────────────────────────────────────────────────────
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Sprawdź, czy Zinit został zainstalowany, i wczytaj go
@@ -81,24 +65,25 @@ else
 fi
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Zinit plugins
-# ──────────────────────────────────────────────────────────────────────────────
+# # ──────────────────────────────────────────────────────────────────────────────
+# # Zinit plugins
+# # ──────────────────────────────────────────────────────────────────────────────
 zinit light zsh-users/zsh-syntax-highlighting 
 zinit light zsh-users/zsh-completions 
 zinit light zsh-users/zsh-autosuggestions 
 zinit light Aloxaf/fzf-tab
 
-# Add in OH-MY-ZSH PLUGINS:
-# Plugins library: https://github.com/ohmyzsh/ohmyzsh/wiki/plugins
-# Installation example: zinit snippet OMZP::git
+# # Add in OH-MY-ZSH PLUGINS:
+# # Plugins library: https://github.com/ohmyzsh/ohmyzsh/wiki/plugins
+# # Installation example: zinit snippet OMZP::git
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Uzupełnienia i Dodatki
-# ──────────────────────────────────────────────────────────────────────────────
+# # ──────────────────────────────────────────────────────────────────────────────
+# # Uzupełnienia i Dodatki
+# # ──────────────────────────────────────────────────────────────────────────────
 
-# ZSH COMPLETIONS: Load complitions
+# # ZSH COMPLETIONS: Load complitions
 autoload -U compinit && compinit
+zinit cdreplay -q
 
 # ZSH AUTOSUGGESTIONS: History
 HISTSIZE=5000
@@ -113,16 +98,17 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# ZSH AUTOSUGGESTIONS: Keybindings
-# Nawigacja w historii:
-bindkey '^k' history-search-forward   # 'k' - nawigacja w dół
-bindkey '^l' history-search-backward  # 'l' - nawigacja w górę
+# # ZSH AUTOSUGGESTIONS: Keybindings
+# Przeszukiwanie historii
+# bindkey '^K' history-search-forward
+# bindkey '^L' history-search-backward
 
-# Akceptowanie i wykonywanie sugestii:
-bindkey '^j' autosuggest-accept       # 'j' - przyjęcie bieżącej sugestii
-bindkey '^;' autosuggest-execute      # ';' - wykonanie bieżącej sugestii
 
-# ZSH_AUTOSUGGESTIONS: Complition styling
+# # Akceptowanie i wykonywanie sugestii:
+# bindkey '^j' autosuggest-accept       # 'j' - przyjęcie bieżącej sugestii
+# bindkey '^;' autosuggest-execute      # ';' - wykonanie bieżącej sugestii
+
+# # ZSH_AUTOSUGGESTIONS: Complition styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no

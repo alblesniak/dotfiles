@@ -7,6 +7,7 @@
 - link:
     ~/.config/nvim: config/nvim
     ~/.config/tmux: config/tmux
+    ~/.config/zsh/functions: config/zsh/functions
     ~/.zshrc: config/zsh/zshrc
     ~/.zshenv: config/zsh/zshenv
     ~/.gitconfig: config/git/gitconfig
@@ -14,38 +15,38 @@
     ~/.config/starship.toml: config/starship/starship.toml
     ~/.config/ghostty: config/ghostty
 # - shell:
-#     - description: Aktualizacja macOS
-#       command: softwareupdate --all --install --force
-#       stdin: true
-#       stdout: true
-#       stderr: true
+# - description: Aktualizacja macOS
+#   command: softwareupdate --all --install --force
+#   stdin: true
+#   stdout: true
+#   stderr: true
 
-#     - description: Instalacja Homebrew
-#       command: scripts/setup_homebrew.zsh
-#       stdout: true
-#       stderr: true
+# - description: Instalacja Homebrew
+#   command: scripts/setup_homebrew.zsh
+#   stdout: true
+#   stderr: true
 
-#     - description: Generowanie klucza SSH i dodanie go do GitHub
-#       command: scripts/setup_github.zsh
-#       stdout: true
-#       stderr: true
+# - description: Generowanie klucza SSH i dodanie go do GitHub
+#   command: scripts/setup_github.zsh
+#   stdout: true
+#   stderr: true
 
-#     - description: Instalacja repozytoriów
-#       command: scripts/setup_repos.zsh
-#       stdout: true
-#       stderr: true
+# - description: Instalacja repozytoriów
+#   command: scripts/setup_repos.zsh
+#   stdout: true
+#   stderr: true
 
-#     - description: Pobieranie plików
-#       command: scripts/setup_downloads.zsh
-#       stdout: true
-#       stderr: true
+# - description: Pobieranie plików
+#   command: scripts/setup_downloads.zsh
+#   stdout: true
+#   stderr: true
 
-#     - description: Konfiguracja macOS
-#       command: scripts/setup_macos.zsh
-#       stdout: true
-#       stderr: true
+# - description: Konfiguracja macOS
+#   command: scripts/setup_macos.zsh
+#   stdout: true
+#   stderr: true
 
-#     - description: Instalacja node.js
-#       command: scripts/setup_node.zsh
-#       stdout: true
-#       stderr: true
+# - description: Instalacja node.js
+#   command: scripts/setup_node.zsh
+#   stdout: true
+#   stderr: true
